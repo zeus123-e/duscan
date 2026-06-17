@@ -49,12 +49,27 @@ The executable is generated at:
 
 - `target/release/duscan.exe`
 
+## Windows Installer
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts/package-installer.ps1
+```
+
+The installer is generated at:
+
+- `release/duscan-v0.1.0-x86_64-pc-windows-msvc-setup.exe`
+
+It installs `duscan.exe` to `%LOCALAPPDATA%\Programs\duscan` and adds that
+folder to the current user's PATH. The uninstaller removes the PATH entry.
+
 ## Release Assets
 
 The GitHub release should include:
 
 - `duscan-v0.1.0-x86_64-pc-windows-msvc.zip`
 - `duscan-v0.1.0-x86_64-pc-windows-msvc.zip.sha256`
+- `duscan-v0.1.0-x86_64-pc-windows-msvc-setup.exe`
+- `duscan-v0.1.0-x86_64-pc-windows-msvc-setup.exe.sha256`
 
 ## Name
 
