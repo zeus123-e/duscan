@@ -78,8 +78,11 @@ The installer is generated at:
 
 - `release/duscan-v0.1.0-x86_64-pc-windows-msvc.msi`
 
-It installs `duscan.exe` to `%LOCALAPPDATA%\Programs\duscan` and adds that
-folder to the current user's PATH. Uninstalling the MSI removes the PATH entry.
+By default, the MSI installs `duscan.exe` for all users in Program Files and
+adds the install folder to the system PATH, so Windows may ask for administrator
+approval. During setup, you can deselect the `Add duscan to PATH (recommended)`
+feature if you do not want PATH changes. Uninstalling the MSI removes the PATH
+entry when that feature was installed.
 
 ## Release Assets
 

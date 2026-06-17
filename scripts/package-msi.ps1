@@ -13,6 +13,7 @@ $wixObjPath = Join-Path $releaseDir "duscan.wixobj"
 $wixPdbPath = Join-Path $releaseDir "duscan-v$Version-x86_64-pc-windows-msvc.wixpdb"
 $exePath = Join-Path $projectRoot "target\release\duscan.exe"
 $readmePath = Join-Path $projectRoot "README.md"
+$licensePath = Join-Path $projectRoot "installer\license.rtf"
 
 New-Item -ItemType Directory -Force -Path $releaseDir | Out-Null
 
@@ -41,6 +42,7 @@ foreach ($path in @($installerPath, $checksumPath, $wixObjPath, $wixPdbPath)) {
   "-dVersion=$Version" `
   "-dExeFile=$exePath" `
   "-dReadmeFile=$readmePath" `
+  "-dLicenseFile=$licensePath" `
   -out $wixObjPath `
   $wxsPath
 
@@ -50,6 +52,7 @@ if ($LASTEXITCODE -ne 0) {
 
 & $light `
   -nologo `
+  -ext (Join-Path $wixRoot "WixUIExtension.dll") `
   -sval `
   -pdbout $wixPdbPath `
   -out $installerPath `
