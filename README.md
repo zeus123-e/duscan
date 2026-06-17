@@ -14,9 +14,28 @@ output, sortable results and a release binary you can drop into your PATH.
 - Filter by minimum size in bytes.
 - Show directories only when you do not want individual files.
 - Print a visual proportion bar.
-- Open a folder picker on Windows when no path is passed.
+- Open into an interactive `DUSCAN>` shell when no arguments are passed.
+- Open a folder picker from the shell with `open` or `dialog`.
 
 ## Usage
+
+Run without arguments to open the interactive shell:
+
+```powershell
+duscan
+```
+
+Inside the shell:
+
+```text
+DUSCAN> scan C:\Users\black\Downloads -p 2 -n 15
+DUSCAN> "C:\Program Files" --somente-diretorios
+DUSCAN> open -p 3
+DUSCAN> help
+DUSCAN> exit
+```
+
+You can still run a one-shot scan directly:
 
 ```powershell
 duscan C:\Users\black\Downloads
@@ -32,7 +51,7 @@ duscan . -p 3 -n 20 -d -m 104857600
 
 ## Options
 
-- `diretorio`: directory to scan. If omitted on Windows, a folder picker opens.
+- `diretorio`: directory to scan. If omitted with other options, a folder picker opens.
 - `-p, --profundidade`: maximum scan depth. Default: `3`.
 - `-n, --limite`: maximum number of rows. Default: `20`.
 - `-d, --somente-diretorios`: show directories only.
@@ -49,18 +68,18 @@ The executable is generated at:
 
 - `target/release/duscan.exe`
 
-## Windows Installer
+## Windows MSI Installer
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts/package-installer.ps1
+powershell -ExecutionPolicy Bypass -File scripts/package-msi.ps1
 ```
 
 The installer is generated at:
 
-- `release/duscan-v0.1.0-x86_64-pc-windows-msvc-setup.exe`
+- `release/duscan-v0.1.0-x86_64-pc-windows-msvc.msi`
 
 It installs `duscan.exe` to `%LOCALAPPDATA%\Programs\duscan` and adds that
-folder to the current user's PATH. The uninstaller removes the PATH entry.
+folder to the current user's PATH. Uninstalling the MSI removes the PATH entry.
 
 ## Release Assets
 
@@ -68,8 +87,8 @@ The GitHub release should include:
 
 - `duscan-v0.1.0-x86_64-pc-windows-msvc.zip`
 - `duscan-v0.1.0-x86_64-pc-windows-msvc.zip.sha256`
-- `duscan-v0.1.0-x86_64-pc-windows-msvc-setup.exe`
-- `duscan-v0.1.0-x86_64-pc-windows-msvc-setup.exe.sha256`
+- `duscan-v0.1.0-x86_64-pc-windows-msvc.msi`
+- `duscan-v0.1.0-x86_64-pc-windows-msvc.msi.sha256`
 
 ## Name
 

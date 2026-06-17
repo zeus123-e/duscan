@@ -1,6 +1,5 @@
 use crate::scanner::ItemDisco;
 use colored::*;
-use std::fmt::Write;
 use std::path::Path;
 
 pub fn formatar_tamanho(bytes: u64) -> String {
@@ -55,7 +54,7 @@ pub fn exibir_resultados(
             "{:>largura$}  {:>5}  {:<barra$}  {}",
             "Tamanho".bold(),
             "%".bold(),
-            "Proporção".bold(),
+            "Proporcao".bold(),
             "Caminho".bold(),
             largura = largura_tamanho,
             barra = largura_barra
@@ -144,108 +143,11 @@ pub fn exibir_resumo(
         formatar_tamanho(tamanho_total).bold()
     );
     println!("  Arquivos:       {}", total_arquivos);
-    println!("  Diretórios:     {}", total_diretorios);
+    println!("  Diretorios:     {}", total_diretorios);
     if erros > 0 {
         println!(
-            "  Erros:          {} (permissão negada ou inacessível)",
+            "  Erros:          {} (permissao negada ou inacessivel)",
             erros.to_string().red()
         );
     }
-}
-
-pub fn gerar_relatorio(
-    itens: &[ItemDisco],
-    tamanho_total: u64,
-    raiz: &Path,
-    mostrar_barra: bool,
-    total_arquivos: usize,
-    total_diretorios: usize,
-    erros: usize,
-) -> String {
-    let mut relatorio = String::new();
-    let raiz_display = raiz.display().to_string();
-
-    let _ = writeln!(relatorio, "Uso de disco: {raiz_display}");
-    let _ = writeln!(relatorio);
-
-    if itens.is_empty() {
-        let _ = writeln!(relatorio, "Nenhum item encontrado.");
-    } else {
-        let largura_tamanho = 10;
-        let largura_barra = 25;
-
-        if mostrar_barra {
-            let _ = writeln!(
-                relatorio,
-                "{:>largura$}  {:>5}  {:<barra$}  {}",
-                "Tamanho",
-                "%",
-                "Proporcao",
-                "Caminho",
-                largura = largura_tamanho,
-                barra = largura_barra
-            );
-            let _ = writeln!(
-                relatorio,
-                "{}",
-                "-".repeat(largura_tamanho + largura_barra + 40)
-            );
-        } else {
-            let _ = writeln!(
-                relatorio,
-                "{:>largura$}  {:>5}  {}",
-                "Tamanho",
-                "%",
-                "Caminho",
-                largura = largura_tamanho
-            );
-            let _ = writeln!(relatorio, "{}", "-".repeat(largura_tamanho + 40));
-        }
-
-        for item in itens {
-            let tam = formatar_tamanho(item.tamanho);
-            let proporcao = if tamanho_total > 0 {
-                item.tamanho as f64 / tamanho_total as f64
-            } else {
-                0.0
-            };
-            let percentual = proporcao * 100.0;
-            let caminho_display = formatar_caminho(&item.caminho, raiz);
-            let icone = if item.e_diretorio { "DIR" } else { "   " };
-
-            if mostrar_barra {
-                let barra = gerar_barra(proporcao, largura_barra);
-                let _ = writeln!(
-                    relatorio,
-                    "{tam:>largura$}  {percentual:>4.1}%  {barra:<barra_largura$}  {icone} {caminho_display}",
-                    largura = largura_tamanho,
-                    barra_largura = largura_barra
-                );
-            } else {
-                let _ = writeln!(
-                    relatorio,
-                    "{tam:>largura$}  {percentual:>4.1}%  {icone} {caminho_display}",
-                    largura = largura_tamanho
-                );
-            }
-        }
-    }
-
-    let _ = writeln!(relatorio);
-    let _ = writeln!(relatorio, "Resumo");
-    let _ = writeln!(
-        relatorio,
-        "  Tamanho total:  {}",
-        formatar_tamanho(tamanho_total)
-    );
-    let _ = writeln!(relatorio, "  Arquivos:       {total_arquivos}");
-    let _ = writeln!(relatorio, "  Diretorios:     {total_diretorios}");
-    if erros > 0 {
-        let _ = writeln!(
-            relatorio,
-            "  Erros:          {erros} (permissao negada ou inacessivel)"
-        );
-    }
-
-    relatorio
 }
