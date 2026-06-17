@@ -1,0 +1,22 @@
+[package]
+name = "duscan"
+version = "0.1.0"
+edition = "2024"
+build = "src/build.rs"
+description = "A small CLI for scanning disk usage and finding large folders"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+walkdir = "2"
+colored = "2"
+rfd = "0.17.2"
+
+[target.'cfg(windows)'.dependencies]
+windows-sys = { version = "0.61.2", features = [
+    "Win32_Foundation",
+    "Win32_System_Console",
+    "Win32_UI_WindowsAndMessaging",
+] }
+
+[build-dependencies]
+embed-manifest = "1.5"
